@@ -1,12 +1,17 @@
 
-use reqwest;
+use std::env;
+use dotenv::dotenv;
+use reqwest::{self, Error};
 
 // For Deserializing the data
 use serde_json::{Result, Value};
 use druid::widget::{Label, Button};
 use druid::{AppLauncher, LocalizedString, PlatformError, Widget, WindowDesc};
 
+
+
 fn fetchCurrentWeather(url: String) -> f64 {
+     
      let resp: String = match reqwest::blocking::get(url) {
          Ok(resp) => resp.text().unwrap(),
          Err(err) => panic!("Error: {}", err)
@@ -26,7 +31,6 @@ fn fetchCurrentWeather(url: String) -> f64 {
     current_weather
 
 }
-
 
 
 fn build_ui() -> impl Widget<String> {
@@ -68,8 +72,10 @@ fn dressMaker(temp: f64) -> String {
 
 
 fn main(){
-    let city="Chennai";
-    let url: String = format!("http://api.weatherapi.com/v1/current.json?key={}&q={}&aqi=yes", "ca6db37f82fc4cba9cf51956241909",city);
+    dotenv().ok();
+    let API_KEY:String=env::var("API_KEY").expect("API_KEY is not set.");
+    let city="Stockholm";
+    let url: String = format!("http://api.weatherapi.com/v1/current.json?key={}&q={}&aqi=yes", API_KEY,city);
     println!("Current City : {}",city);
     let current_weather=fetchCurrentWeather(url);
     println!("Current Weather : {}",current_weather);
@@ -79,7 +85,7 @@ fn main(){
         .title(LocalizedString::new("Rust GUI App")) //App Title
         .window_size((300.0, 300.0)); //Window Size
 
-    let DisplayText = format!(" Current Weather in {0} : {1},\n it is recommended to wear {2}\n \n", city, current_weather, recommended_dress);
+    let DisplayText = format!(" Current Weather in {0} : {1},\n it is recommended to wear {2}\n 'n", city, current_weather, recommended_dress);
     // Launch the application
     AppLauncher::with_window(main_window)
         .use_simple_logger()
@@ -97,10 +103,27 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_valid_url() -> Result<()> {
-        let city: &str="Stockholm";
-        let url: String = format!("http://api.weatherapi.com/v1/current.json?key={}&q={}&aqi=yes", "ca6db37f82fc4cba9cf51956241909",city);
-        fetchCurrentWeather(url)
+    fn test_dressmaker() {
+        let temp = 20.0;
+        let out = dressMaker(temp);
+        assert_eq!(out, "Light Jacket!");      
+    }   
+
+    #[test]
+    fn test_dressmaker_incorrect() {
+        let temp = 21.0;
+        let out = dressMaker(temp);
+        assert_ne!(out, "Shorts!");      
+    }   
+
+    #[test]
+    fn test_current_weather() {
+        dotenv().ok();
+        let city="Stockholm";
+        let API_KEY:String=env::var("API_KEY").expect("API_KEY is not set.");
+        let url: String = format!("http://api.weatherapi.com/v1/current.json?key={}&q={}&aqi=yes", API_KEY,city);
+        let current_weather=fetchCurrentWeather(url);
+        assert!(current_weather>0.0);      
     }
 }
 
@@ -109,5 +132,6 @@ mod tests {
 
 Todo :
 
-Need to send the temperature back to the calling function.
+Integrate SL API to get traffic data
+
 */
