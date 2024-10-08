@@ -16,15 +16,15 @@ fn main(){
     
     let city="Stockholm";
     println!("Current City : {}",city);
-    loop {
-        let current_weather=dressme::fetch_current_weather(city,None);
+   
+        let current_weather=dressme::fetch_current_weather(city,"");
         println!("Current Weather : {}",current_weather);
         let recommended_dress = dressme::dress_maker(current_weather);
         println!("Recommended Dress : {}", recommended_dress);
         println!("-----------------------------------------");
         std::thread::sleep(std::time::Duration::from_secs(300));
     
-    }
+    
 }
 
 
@@ -50,7 +50,7 @@ mod tests {
     fn test_current_weather() {
         dotenv().ok();
         let city="Malaga";
-        let current_weather=dressme::fetch_current_weather(city,None);
+        let current_weather=dressme::fetch_current_weather(city,"");
         assert!(current_weather>0.0);      
     }
 }
