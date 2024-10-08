@@ -52,34 +52,6 @@ pub fn dress_maker(temp: f64) -> String {
 
 
 
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-
-//     #[test]
-//     fn test_dress_maker() {
-//         let temp = 20.0;
-//         let out = dress_maker(temp);
-//         assert_eq!(out, "Light Jacket!");      
-//     }   
-
-//     #[test]
-//     fn test_dress_maker_incorrect() {
-//         let temp = 21.0;
-//         let out = dress_maker(temp);
-//         assert_ne!(out, "Shorts!");      
-//     }   
-
-//     #[test]
-//     fn test_current_weather() {
-//         dotenv().ok();
-//         let city="Malaga";
-//         let current_weather=fetch_current_weather(city);
-//         assert!(current_weather>0.0);      
-//     }
-// }
-
-
 /*
 
 Todo :
