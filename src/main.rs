@@ -17,7 +17,7 @@ fn main(){
     let city="Stockholm";
     println!("Current City : {}",city);
     loop {
-        let current_weather=dressme::fetch_current_weather(city);
+        let current_weather=dressme::fetch_current_weather(city,None);
         println!("Current Weather : {}",current_weather);
         let recommended_dress = dressme::dress_maker(current_weather);
         println!("Recommended Dress : {}", recommended_dress);
@@ -50,7 +50,7 @@ mod tests {
     fn test_current_weather() {
         dotenv().ok();
         let city="Malaga";
-        let current_weather=dressme::fetch_current_weather(city);
+        let current_weather=dressme::fetch_current_weather(city,None);
         assert!(current_weather>0.0);      
     }
 }

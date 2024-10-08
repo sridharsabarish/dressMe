@@ -10,9 +10,15 @@ use druid::{AppLauncher, LocalizedString, PlatformError, Widget, WindowDesc};
 
 
 
-pub fn fetch_current_weather(city: &str) -> f64 {
-     dotenv().ok();
-     let api_key:String=env::var("API_KEY").expect("api_key is not set.");
+pub fn fetch_current_weather(city: &str, api_key: Option<&str>) -> f64 {         
+    dotenv().ok();
+
+    // Get the API key 
+     let api_key = match api_key {
+         None => env::var("API_KEY").expect("api_key is not set."),
+         Some(k) => k.to_string(),
+     };
+
      let url: String = format!("http://api.weatherapi.com/v1/current.json?key={}&q={}&aqi=yes", api_key,city);    
      
      let resp: String = match reqwest::blocking::get(url) {
