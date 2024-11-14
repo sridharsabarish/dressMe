@@ -13,17 +13,17 @@ fn main(){
 
 
 
-    
+    loop{
     let city="Stockholm";
     println!("Current City : {}",city);
    
         let current_weather=dressme::fetch_current_weather(city,"");
         println!("Current Weather : {}",current_weather);
         let recommended_dress = dressme::dress_maker(current_weather);
-        println!("Recommended Dress : {}", recommended_dress);
+        println!("Recommended Layers : {}", recommended_dress);
         println!("-----------------------------------------");
-        std::thread::sleep(std::time::Duration::from_secs(300));
-    
+        std::thread::sleep(std::time::Duration::from_secs(5));
+    }
     
 }
 

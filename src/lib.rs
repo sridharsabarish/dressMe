@@ -35,7 +35,7 @@ pub fn fetch_current_weather(city: &str, api_key: &str) -> f64 {
 
     // Save the temperature
     let current_weather: f64 = v["current"]["temp_c"].as_f64().unwrap();
-    println!("Weather currently is at {} C", current_weather );
+    //println!("Weather currently is at {} C", current_weather );
     // dress_maker(current_weather);
     current_weather
 
@@ -45,11 +45,11 @@ pub fn fetch_current_weather(city: &str, api_key: &str) -> f64 {
 pub fn dress_maker(temp: f64) -> String {
 
     let out:&str = match temp {
-        temp if temp>25.0 => "Shorts!",
-        temp if temp>15.0 => "Light Jacket!",
-        temp if temp>10.0 => "Autumn Jacket!",
-        temp if temp>0.0 => "Winter Jacket!",
-        _ => "God help you!"
+        temp if temp>25.0 => "0 Layer",
+        temp if temp>15.0 => "1 Layer",
+        temp if temp>10.0 => "2 Layer",
+        temp if temp>0.0 => "3 Layers!",
+        _ => "4+ Layers!"
     };
   String::from(out)
 }
