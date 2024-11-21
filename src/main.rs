@@ -9,6 +9,7 @@ use druid::widget::{Label, Button};
 use druid::{AppLauncher, LocalizedString, PlatformError, Widget, WindowDesc};
 
 
+
 fn main(){
 
 
@@ -32,11 +33,30 @@ fn main(){
 mod tests {
     use super::*;
 
+
+
+
     #[test]
-    fn test_dress_maker() {
+    fn test_negative_weather() {
+        let temp = -10.0;
+        let out = dressme::dress_maker(temp);
+        assert_eq!(out, "4+ Layers!");      
+    }   
+
+    #[test]
+    fn test_slightly_positive_weather() {
+        let temp = 2.5;
+        let out = dressme::dress_maker(temp);
+        assert_eq!(out, "3 Layers!");      
+    }   
+
+
+
+    #[test]
+    fn test_dress_maker_mild_summer() {
         let temp = 20.0;
         let out = dressme::dress_maker(temp);
-        assert_eq!(out, "Light Jacket!");      
+        assert_eq!(out, "1 Layer");      
     }   
 
     #[test]
@@ -52,6 +72,11 @@ mod tests {
         let city="Malaga";
         let current_weather=dressme::fetch_current_weather(city,"");
         assert!(current_weather>0.0);      
+
+
+
+
+    
     }
 }
 
