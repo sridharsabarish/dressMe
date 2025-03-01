@@ -23,6 +23,7 @@ fn main(){
         let recommended_dress = dressme::dress_maker(current_weather);
         println!("Recommended Layers : {}", recommended_dress);
         println!("-----------------------------------------");
+
         std::thread::sleep(std::time::Duration::from_secs(600));
     }
     
@@ -72,10 +73,6 @@ mod tests {
         let city="Malaga";
         let current_weather=dressme::fetch_current_weather(city,"");
         assert!(current_weather>0.0);      
-
-
-
-
     
     }
 }
